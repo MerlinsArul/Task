@@ -19,7 +19,8 @@ export class AuthGuard implements CanActivate {
       }
     }
     this.router.navigate(['/login']);
-   this.toastr.warning('Kindly Login','Message')
+   this.toastr.warning('Kindly Login as Admin','Message')
     return false;
   }
+  
 }

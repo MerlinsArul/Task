@@ -1,0 +1,94 @@
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+
+.mat-step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.mat-step-header .mat-step-label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+input,
+mat-select,
+mat-radio-button,
+.mat-checkbox-label {
+  margin-top: 10px;
+}
+
+
+mat-radio-group,
+mat-checkbox {
+  display: flex;
+  flex-direction: column;
+}
+
+
+div[role="alert"] {
+  color: red;
+  margin-top: 5px;
+}
+
+
+.mat-horizontal-stepper-navigation {
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+/* button[type="submit"] {
+  padding: 5px 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+} */
+
+
+.mat-stepper-previous-button {
+  background-color: #f50057;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.mat-stepper-previous-button:hover {
+  background-color: #c51162;
+}
+
+
+.mat-stepper-next-button,
+.mat-stepper-submit-button {
+  background-color: #3f51b5;
+  color: rgb(83, 222, 44);
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.mat-stepper-next-button[disabled],
+.mat-stepper-submit-button[disabled] {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.mat-stepper-next-button:hover,
+.mat-stepper-submit-button:hover {
+  background-color: #303f9f;
+}
+

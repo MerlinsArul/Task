@@ -1,8 +1,8 @@
 <h2>Add Car</h2>
 <div>
-  <app-shared-form (formSubmit)="onSubmit($event)"></app-shared-form>
+  <app-shared-form [fields]="fields"(formSubmit)="onSubmit($event)"></app-shared-form>
 </div>
 <h2>Add Tree</h2>
 <div>
-  <app-shared-form (formSubmit)="onSubmit1($event)"></app-shared-form>
+  <app-shared-form [fields]="fields"(formSubmit)="onSubmit1($event)"></app-shared-form>
 </div>

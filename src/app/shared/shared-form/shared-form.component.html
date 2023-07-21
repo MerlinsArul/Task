@@ -1,0 +1,45 @@
+<form [formGroup]="form" novalidate>
+  <mat-horizontal-stepper #stepper>
+    <ng-container *ngFor="let field of fields">
+      <mat-step [stepControl]="form">
+        <ng-template matStepLabel>{{ field.label }}</ng-template>
+        <div>
+          <label [for]="field.name">{{ field.label }}:</label>
+          <ng-container [ngSwitch]="field.type">
+            <input *ngSwitchCase="'text'" [id]="field.name" [type]="field.type" [formControlName]="field.name" />
+            <mat-select *ngSwitchCase="'select'" [formControlName]="field.name" [id]="field.name">
+              <mat-option *ngFor="let option of field.options" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+            <ng-container *ngSwitchCase="'checkbox'">
+              <mat-checkbox *ngFor="let option of field.options" [formControlName]="field.name + '_' + option.value"
+                [id]="option.value">
+                {{ option.label }}
+              </mat-checkbox>
+            </ng-container>
+
+            <mat-radio-group *ngSwitchCase="'radio'" [formControlName]="field.name">
+              <mat-radio-button *ngFor="let option of field.options" [id]="option.value" [value]="option.value">
+                {{ option.label }}
+              </mat-radio-button>
+            </mat-radio-group>
+
+          </ng-container>
+          <div *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched">
+            {{ field.label }} is required.
+          </div>
+        </div>
+        <div *ngIf="!isLastStep(field)">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext [disabled]="form.get(field.name)?.invalid || form.get(field.name)?.pending">
+            Next
+          </button>
+        </div>
+        <div *ngIf="isLastStep(field)">
+          <button mat-button type="button" [disabled]="form.invalid" (click)="submitForm()">Submit</button>
+        </div>
+      </mat-step>
+    </ng-container>
+  </mat-horizontal-stepper>
+</form>
