@@ -2,7 +2,9 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
@@ -19,16 +21,23 @@ import { DynamicField } from './dynamic-field.model';
   templateUrl: './shared-form.component.html',
   styleUrls: ['./shared-form.component.css'],
 })
-export class SharedFormComponent {
+export class SharedFormComponent implements OnChanges {
   @Output() formSubmit = new EventEmitter<any>();
   @ViewChild('stepper') stepper!: MatStepper;
   @Input() fields: DynamicField[] = [];
   form!: FormGroup;
+  newFieldForm!: FormGroup;
+  newFieldControl: FormControl = new FormControl('', Validators.required);
 
   constructor(private formBuilder: FormBuilder) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['fields'] && changes['fields'].currentValue) {
+      this.initializeForm();
+    }
+  }
 
-  ngOnInit(): void {
+  initializeForm(): void {
     const formGroup: any = {};
 
     this.fields.forEach((field) => {
@@ -73,6 +82,14 @@ export class SharedFormComponent {
     this.form = this.formBuilder.group(formGroup);
   }
 
+  initializeNewFieldForm(): void {
+    this.newFieldControl = this.formBuilder.control('', Validators.required);
+
+    this.newFieldForm = this.formBuilder.group({
+      newField: this.newFieldControl,
+    });
+  }
+
   isLastStep(field: DynamicField): boolean {
     return field === this.fields[this.fields.length - 1];
   }
@@ -98,4 +115,5 @@ export class SharedFormComponent {
       this.stepper.reset();
     }
   }
+
 }

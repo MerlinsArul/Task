@@ -1,19 +1,26 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { AddFieldComponent } from '../add-field/add-field.component';
+import { LocalStorageService } from '../localstorage.service';
 import { DynamicField } from '../shared/shared-form/dynamic-field.model';
+import { SharedFormComponent } from '../shared/shared-form/shared-form.component';
 
 @Component({
   selector: 'app-addcategory',
   templateUrl: './addcategory.component.html',
   styleUrls: ['./addcategory.component.css'],
 })
-export class AddcategoryComponent {
+export class AddcategoryComponent implements OnInit {
+  @ViewChild('sharedForm', { static: false }) sharedForm!: SharedFormComponent;
+  @ViewChild(AddFieldComponent, { static: false }) addFieldComponent!: AddFieldComponent;
+
   cars!: any[];
+  newCarField!: DynamicField;
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private toastr: ToastrService,private localStorageService: LocalStorageService) {}
 
-  fields: DynamicField[] = [
+  treefields: DynamicField[] = [
     {
       type: 'text',
       label: 'Name',
@@ -76,32 +83,101 @@ export class AddcategoryComponent {
       },
     },
   ];
-
-  onSubmit(formData: any) {
-    console.log(formData);
-    this.http.post<any>('http://localhost:3000/car', formData).subscribe(
-      (response) => {
-        this.toastr.success('Car Added Successfully');
+  carfields: DynamicField[] = [
+    {
+      type: 'text',
+      label: 'Name',
+      name: 'name',
+      value: '',
+      validators: {
+        required: true,
+        minLength: 6,
       },
-      (error) => {
-        this.toastr.error('Try Again');
-        console.error('Error adding cat:', error);
-      }
-    );
+    },
+    {
+      type: 'text',
+      label: 'Image',
+      name: 'image',
+      value: '',
+      validators: {
+        required: true,
+        regexPattern: '^(https?://).*$',
+      },
+    },
+    {
+      type: 'select',
+      label: 'Color',
+      name: 'color',
+      value: '',
+      options: [
+        { value: 'Red', label: 'Red' },
+        { value: 'Blue', label: 'Blue' },
+        { value: 'Green', label: 'Green' },
+        { value: 'Yellow', label: 'Yellow' },
+      ],
+      validators: {
+        required: true,
+      },
+    },
+    {
+      name: 'country',
+      label: 'Country',
+      type: 'checkbox',
+      options: [
+        { value: 'USA', label: 'United States' },
+        { value: 'Canada', label: 'Canada' },
+        { value: 'UK', label: 'United Kingdom' },
+        { value: 'Germany', label: 'Germany' },
+      ],
+      validators: {
+        required: true,
+      },
+    },
+    {
+      name: 'wheel',
+      label: 'Wheel',
+      type: 'radio',
+      options: [
+        { value: 'Car', label: 'Fourwheel' },
+        { value: 'Lorry', label: 'EightWheel' },
+      ],
+      validators: {
+        required: true,
+      },
+    },
+  ];
+
+  ngOnInit() {
+    const storedTreeFields = this.localStorageService.getFields('treefields');
+    if (storedTreeFields && storedTreeFields.length > 0) {
+      this.treefields = storedTreeFields;
+    }
+
+    const storedCarFields = this.localStorageService.getFields('carfields');
+    if (storedCarFields && storedCarFields.length > 0) {
+      this.carfields = storedCarFields;
+    }
   }
 
-  onSubmit1(formData: any) {
-    console.log(formData);
+  getFormFields(): DynamicField[] {
+    console.log(this.treefields);
 
-    this.http.post<any>('http://localhost:3000/tree', formData).subscribe(
-      (response) => {
-        this.toastr.success('Tree Added Successfully');
-        console.log('Tree added:', response);
-      },
-      (error) => {
-        this.toastr.error('Try Again');
-        console.error('Error adding cat:', error);
-      }
-    );
+    return this.treefields;
+  }
+
+  getcarFormFields(){
+    console.log(this.carfields);
+    return this.carfields;
+  }
+
+  onAddField(newField: DynamicField) {
+    this.treefields.push(newField);
+    const a = this.localStorageService.setFields('treefields', this.treefields);
+  }
+
+  onAddField1(newField: DynamicField) {
+    this.newCarField = newField;
+    this.carfields.push(newField);
+    const b =this.localStorageService.setFields('carfields', this.carfields);
   }
 }

@@ -1,52 +1,24 @@
-<div class="container">
-  <div class="top-box">
-    <h2>Choose an Option</h2>
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-      <div class="radio-group">
-        <label>
-          <input type="radio" formControlName="choice" value="car">
-          <span class="checkmark"></span>
-          Car
-        </label>
-        <label>
-          <input type="radio" formControlName="choice" value="tree">
-          <span class="checkmark"></span>
-          Tree
-        </label>
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-</div>
+<h2>Form with car and tree Options:</h2>
 
-<div class="container" *ngIf="myForm.value.choice === 'car'">
-  <div class="row">
-    <ng-container *ngFor="let car of cars">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{car.image}}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{car.name}}</h5>
-          <h5 class="card-title">{{car.remarks}}</h5>
-          <h5 class="card-title">{{car.country}}</h5>
-          <h5 class="card-title">{{car.type}}</h5>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+<div>
+  <app-data-form [radioOptions]="radioOptions" [checkboxOptions]="checkboxOptions" [selectedOptions]="selectedOptions"
+    (selectedOptionsChange)="onSelectedOptionsChange($event)"></app-data-form>
+  <h3>Data from Database:</h3>
+  <div class="body">
+    <div class="container">
+      <div class="row">
+        <ng-container *ngFor="let item of dataFromDatabase">
+          <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{item.image}}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{item.name}}</h5>
+              <h5 class="card-title">{{item.remarks}}</h5>
+              <h5 class="card-title">{{item.country}}</h5>
+              <h5 class="card-title">{{item.type}}</h5>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </ng-container>
       </div>
-    </ng-container>
+    </div>
   </div>
-</div>
-
-<div class="container" *ngIf="myForm.value.choice === 'tree'">
-  <div class="row">
-    <ng-container *ngFor="let tree of trees">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{tree.image}}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{tree.name}}</h5>
-          <h5 class="card-title">{{tree.remarks}}</h5>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-</div>

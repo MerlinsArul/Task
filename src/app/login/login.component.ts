@@ -12,18 +12,22 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   email!: string;
   password!: string;
-  loginForm!:FormGroup
+  loginForm!: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router,private toastr:ToastrService,private formBuilder:FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: [''],
-      password: ['']
+      password: [''],
     });
   }
   login(): void {
-
     const email = this.loginForm.get('email')!.value;
     const password = this.loginForm.get('password')!.value;
 
@@ -33,24 +37,26 @@ export class LoginComponent implements OnInit {
         this.authService.setToken(token);
 
         const userRole = this.authService.getUserRole();
-        if (userRole === 'admin') {
-          this.toastr.success('Logged in as Admin', 'Message');
+        if (userRole === 'ProjectArchitect') {
+          this.toastr.success('Logged in as ProjectArchitect', 'Message');
           this.router.navigate(['/addcategory']);
-        } else if (userRole === 'user') {
-          this.toastr.success('Logged in as User', 'Message');
-          this.router.navigate(['/']);
+        } else if (userRole === 'PromptEngineer') {
+          this.toastr.success('Logged in as PromptEngineer', 'Message');
+          this.router.navigate(['/user']);
         } else {
-          alert('There is no role in this');
+          this.toastr.warning('There is no role in this', 'Message');
         }
       },
       (error) => {
-        this.toastr.warning('Please login again with correct credentials', 'Message');
+        this.toastr.warning(
+          'Please login again with correct credentials',
+          'Message'
+        );
         console.log(error);
       }
     );
   }
-
-
+}
   // login(): void {
   //   this.authService.login(this.email, this.password).subscribe(
   //     (response) => {
@@ -74,4 +80,4 @@ export class LoginComponent implements OnInit {
   //     }
   //   );
   // }
-}
+

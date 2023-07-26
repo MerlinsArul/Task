@@ -1,0 +1,12 @@
+<div>
+  <h3>Add New Field</h3>
+  <label>Label:</label>
+  <input [(ngModel)]="newField.label" placeholder="Enter label" />
+
+  <label>Name:</label>
+  <input [(ngModel)]="newField.name" placeholder="Enter name" />
+
+  <!-- Add other input fields for type, value, options, validators, etc., as needed -->
+
+  <button mat-button (click)="addField()">Add Field</button>
+</div>

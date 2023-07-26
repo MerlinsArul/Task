@@ -8,9 +8,11 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { DataFormComponent } from './data-form/data-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [SharedFormComponent],
+  declarations: [SharedFormComponent, DataFormComponent],
   imports: [
     CommonModule,
     MatRadioModule,
@@ -20,9 +22,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  exports:[SharedFormComponent]
+  exports:[SharedFormComponent,DataFormComponent]
 })
 export class SharedModule { }

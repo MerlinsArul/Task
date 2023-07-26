@@ -17,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from './shared/shared.module';
+import { UserCategoryComponent } from './user-category/user-category.component';
+import { AddFieldComponent } from './add-field/add-field.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { SharedModule } from './shared/shared.module';
     NavbarComponent,
     LoginComponent,
     AddcategoryComponent,
+    UserCategoryComponent,
+    AddFieldComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,14 +43,14 @@ import { SharedModule } from './shared/shared.module';
     MatButtonModule,
     MatStepperModule,
     MatSelectModule,
-    SharedModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    SharedModule
   ],
-  providers: [],
+  providers: [AddcategoryComponent],
 
 
   bootstrap: [AppComponent]

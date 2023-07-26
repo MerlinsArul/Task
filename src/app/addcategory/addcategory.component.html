@@ -1,8 +1,12 @@
-<h2>Add Car</h2>
-<div>
-  <app-shared-form [fields]="fields"(formSubmit)="onSubmit($event)"></app-shared-form>
-</div>
-<h2>Add Tree</h2>
-<div>
-  <app-shared-form [fields]="fields"(formSubmit)="onSubmit1($event)"></app-shared-form>
-</div>
+
+<h1>For Car</h1>
+<app-add-field (addFieldEvent)="onAddField1($event)"></app-add-field>
+<app-shared-form [fields]="carfields" #sharedForm></app-shared-form>
+
+<h1>For Tree</h1>
+<app-add-field (addFieldEvent)="onAddField($event)"></app-add-field>
+<app-shared-form [fields]="treefields"></app-shared-form>
+
+
+
+

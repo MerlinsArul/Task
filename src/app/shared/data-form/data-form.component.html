@@ -1,0 +1,15 @@
+<div>
+  <h2>Radio Options:</h2>
+  <div *ngFor="let option of radioOptions">
+    <input type="radio" [value]="option" [checked]="isSelectedRadio(option)" (change)="updateSelectedRadio(option)">
+    {{ option }}
+  </div>
+</div>
+
+<div>
+  <h2>Checkbox Options:</h2>
+  <div *ngFor="let option of checkboxOptions">
+  <input type="checkbox" [value]="option" [checked]="isSelectedCheckbox(option)" (change)="updateCheckboxOptions(option, $event)">
+    {{ option }}
+  </div>
+</div>
