@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { AdminAuthGuard, AuthGuard } from 'src/auth.guard';
+import { AuthGuard, ProjectArchitectGuard } from 'src/auth.guard';
 
 import { UserService } from './user.service';
 
@@ -32,7 +32,7 @@ export class UserController {
   }
 
   @Get('admin')
-  @UseGuards(AdminAuthGuard)
+  @UseGuards(ProjectArchitectGuard)
   async protectedRoute1() {
     return { message: 'This route is admin protected' };
   }

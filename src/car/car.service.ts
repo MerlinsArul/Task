@@ -15,4 +15,8 @@ export class CarService {
     const newCar = new this.carModel(car);
     return newCar.save();
   }
+  async addNewFieldToModel(fieldName: string, fieldConfig: any): Promise<void> {
+    const newFieldSchema = { [fieldName]: fieldConfig };
+    this.carModel.schema.add(newFieldSchema);
+  }
 }
